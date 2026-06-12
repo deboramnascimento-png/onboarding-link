@@ -385,6 +385,10 @@ body {
 .sidebar {
   position: sticky;
   top: calc(var(--header-h) + 1.5rem);
+  max-height: calc(100vh - var(--header-h) - 3rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
 }
 
 .checklist-section {
