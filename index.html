@@ -214,28 +214,22 @@ body {
 .view.active { display: block; }
 
 /* ── Back button ── */
-.back-btn {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 200;
+.inline-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   background: var(--card);
   border: 0.5px solid var(--border);
   border-radius: 999px;
-  padding: 8px 16px;
+  padding: 8px 18px;
   font-size: 12px;
   font-weight: 500;
   color: var(--fg-muted);
   cursor: pointer;
-  display: none;
-  align-items: center;
-  gap: 6px;
   transition: border-color 0.15s, color 0.15s;
-  backdrop-filter: blur(8px);
+  margin-bottom: 1rem;
 }
-
-.back-btn:hover { border-color: var(--gold-muted); color: var(--gold-soft); }
-.back-btn.visible { display: flex; }
+.inline-back:hover { border-color: var(--gold-muted); color: var(--gold-soft); }
 
 /* ── Shared styles (both views) ── */
 
@@ -564,8 +558,6 @@ body {
 <div class="hero">
   <div class="wrapper">
     <p class="hero-eyebrow">Manual de Onboarding · Link School</p>
-    <h1 class="hero-name">Milena Queiroz</h1>
-    <p class="hero-role">Coordenadora de Comunicação Interna</p>
     <div class="hero-pills">
       <span class="hero-pill">Liderança de 2 pessoas</span>
       <span class="hero-pill">Estruturação da área</span>
@@ -790,7 +782,10 @@ body {
         </div>
       </div>
 
-      <div class="footer">Link School · Onboarding da Milena Queiroz · junho de 2026</div>
+      <div style="margin-top:2.5rem; text-align:center; padding-bottom:2rem;">
+        <button class="inline-back" onclick="goBack()">← Voltar para seleção</button>
+        <div class="footer" style="margin-top:0.75rem;">Link School · Onboarding da Milena Queiroz · junho de 2026</div>
+      </div>
     </div>
 
     <!-- Sidebar checklist -->
@@ -934,8 +929,6 @@ document.addEventListener('DOMContentLoaded', loadState);
 <div class="hero">
   <div class="wrapper">
     <p class="hero-eyebrow">Manual de Onboarding · Link School</p>
-    <h1 class="hero-name">Luiz Gevaerd</h1>
-    <p class="hero-role">Community Manager</p>
     <div class="hero-pills">
       <span class="hero-pill">Comunidades de estudantes</span>
       <span class="hero-pill">Engajamento e retenção</span>
@@ -1157,7 +1150,10 @@ document.addEventListener('DOMContentLoaded', loadState);
         </div>
       </div>
 
-      <div class="footer">Link School · Onboarding do Luiz Gevaerd · junho de 2026</div>
+      <div style="margin-top:2.5rem; text-align:center; padding-bottom:2rem;">
+        <button class="inline-back" onclick="goBack()">← Voltar para seleção</button>
+        <div class="footer" style="margin-top:0.75rem;">Link School · Onboarding do Luiz Gevaerd · junho de 2026</div>
+      </div>
     </div>
 
     <!-- Sidebar -->
@@ -1279,8 +1275,7 @@ document.addEventListener('DOMContentLoaded', loadState);
 
 </div>
 
-<!-- Back button -->
-<button class="back-btn" id="back-btn" onclick="goBack()">← Voltar</button>
+
 
 <script>
 // ── State ──
@@ -1293,7 +1288,7 @@ function openView(name) {
   document.getElementById('view-milena').classList.remove('active');
   document.getElementById('view-luiz').classList.remove('active');
   document.getElementById('view-' + name).classList.add('active');
-  document.getElementById('back-btn').classList.add('visible');
+  
   currentView = name;
   loadState(name);
   window.scrollTo(0, 0);
@@ -1302,7 +1297,7 @@ function openView(name) {
 function goBack() {
   document.getElementById('view-milena').classList.remove('active');
   document.getElementById('view-luiz').classList.remove('active');
-  document.getElementById('back-btn').classList.remove('visible');
+  
   document.getElementById('selector').style.display = 'flex';
   currentView = null;
   refreshSelectorProgress();
