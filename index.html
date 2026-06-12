@@ -5,6 +5,82 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Onboarding — Link School</title>
 <style>
+
+/* ── Light mode ── */
+body.light {
+  --bg:          oklch(0.96 0.008 255);
+  --card:        oklch(0.99 0.003 255);
+  --secondary:   oklch(0.90 0.01 255);
+  --gold:        oklch(0.52 0.14 55);
+  --gold-soft:   oklch(0.45 0.12 55);
+  --gold-muted:  oklch(0.42 0.10 55);
+  --fg:          oklch(0.15 0.04 260);
+  --fg-muted:    oklch(0.32 0.03 260);
+  --fg-subtle:   oklch(0.52 0.02 260);
+  --border:      oklch(0.80 0.01 255);
+  --border-soft: oklch(0.87 0.01 255);
+  --navy-deep:   oklch(0.18 0.04 260);
+}
+body.light .sticky-header {
+  background: oklch(0.99 0.003 255 / 0.95);
+  border-bottom-color: oklch(0.84 0.01 255);
+}
+body.light .hero {
+  background: linear-gradient(135deg, oklch(0.88 0.025 260), oklch(0.93 0.015 262));
+}
+body.light .hero-eyebrow { color: oklch(0.45 0.12 55); }
+body.light .hero-main-name { color: oklch(0.12 0.04 260); }
+body.light .hero-main-role { color: oklch(0.38 0.08 55); }
+body.light .hero-pill {
+  background: oklch(0.52 0.14 55 / 0.12);
+  color: oklch(0.30 0.10 55);
+  border-color: oklch(0.52 0.14 55 / 0.30);
+}
+body.light .sel-card { background: oklch(0.99 0 0); }
+body.light #selector { background: linear-gradient(135deg, oklch(0.88 0.02 260), oklch(0.93 0.01 262)); }
+body.light .sel-eyebrow { color: oklch(0.42 0.12 55); }
+body.light .sel-title { color: oklch(0.12 0.04 260); }
+body.light .sel-sub { color: oklch(0.38 0.03 260); }
+body.light .sel-name { color: oklch(0.12 0.04 260); }
+body.light .sel-role { color: oklch(0.38 0.08 55); }
+body.light .sel-pill { color: oklch(0.35 0.04 260); background: oklch(0.88 0.01 260); }
+body.light .sel-prog-label { color: oklch(0.38 0.10 55); }
+body.light .phase-tag.ph-ant { background: oklch(0.52 0.14 55 / 0.12); color: oklch(0.30 0.10 55); border-color: oklch(0.52 0.14 55 / 0.25); }
+body.light .step-title { color: oklch(0.12 0.04 260); }
+body.light .checklist-title { color: oklch(0.40 0.03 260); }
+body.light .principle-title { color: oklch(0.30 0.10 55); }
+body.light .sticky-back,
+body.light .theme-btn,
+body.light #sel-theme-btn {
+  background: oklch(0.52 0.14 55 / 0.10);
+  border-color: oklch(0.52 0.14 55 / 0.35);
+  color: oklch(0.30 0.10 55);
+}
+body.light .sticky-back:hover,
+body.light .theme-btn:hover,
+body.light #sel-theme-btn:hover {
+  background: oklch(0.52 0.14 55 / 0.20);
+  color: oklch(0.22 0.10 55);
+}
+body.light .badge.b-lider { background: oklch(0.60 0.16 230 / 0.12); color: oklch(0.25 0.14 230); border-color: oklch(0.60 0.16 230 / 0.3); }
+body.light .badge.b-people { background: oklch(0.50 0.16 145 / 0.12); color: oklch(0.22 0.14 145); border-color: oklch(0.50 0.16 145 / 0.3); }
+body.light .badge.b-buddy { background: oklch(0.52 0.14 55 / 0.12); color: oklch(0.28 0.10 55); border-color: oklch(0.52 0.14 55 / 0.3); }
+body.light .badge.b-milena,
+body.light .badge.b-luiz { background: oklch(0.52 0.14 55 / 0.15); color: oklch(0.25 0.12 55); border-color: oklch(0.52 0.14 55 / 0.35); }
+body.light .marco-jd-label,
+body.light .marco-label { color: oklch(0.28 0.12 55); background: oklch(0.52 0.14 55 / 0.12); border-color: oklch(0.52 0.14 55 / 0.3); }
+body.light .tl-title { color: oklch(0.12 0.04 260); }
+body.light .tl-time { color: oklch(0.45 0.03 260); }
+body.light .check-text { color: oklch(0.15 0.04 260); }
+body.light .check-when { color: oklch(0.50 0.02 260); }
+body.light .check-box.checked { background: oklch(0.45 0.14 55); border-color: oklch(0.45 0.14 55); }
+body.light .progress-fill,
+body.light .cl-progress-fill,
+body.light .sticky-progress-fill,
+body.light .sel-prog-fill { background: linear-gradient(90deg, oklch(0.42 0.10 55), oklch(0.52 0.14 55)); }
+body.light .checklist-count { color: oklch(0.35 0.12 55); }
+body.light .sticky-pct { color: oklch(0.35 0.12 55); }
+
 /* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -149,18 +225,18 @@ body {
 }
 
 .sel-name {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--fg);
   margin-bottom: 4px;
 }
 
 .sel-role {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--gold-soft);
   font-weight: 500;
   margin-bottom: 12px;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 .sel-pills {
@@ -181,10 +257,12 @@ body {
 }
 
 .sel-progress {
-  margin-top: 14px;
+  margin-top: auto;
+  padding-top: 14px;
   display: flex;
   align-items: center;
   gap: 8px;
+  width: 100%;
 }
 
 .sel-prog-track {
@@ -332,13 +410,44 @@ body {
   white-space: nowrap;
 }
 
+/* ── Nav buttons ── */
+.sticky-back,
+.theme-btn,
+#sel-theme-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: oklch(0.82 0.16 85 / 0.10);
+  border: 0.5px solid oklch(0.82 0.16 85 / 0.35);
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gold-soft);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+  font-family: inherit;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+.sticky-back:hover,
+.theme-btn:hover,
+#sel-theme-btn:hover {
+  background: oklch(0.82 0.16 85 / 0.22);
+  border-color: oklch(0.82 0.16 85 / 0.65);
+  color: var(--gold);
+}
+
 /* ── Hero (below fixed header) ── */
 .hero {
   margin-top: var(--header-h);
   background: linear-gradient(135deg, oklch(0.14 0.04 260), oklch(0.22 0.05 262));
   border-bottom: 1px solid var(--border-soft);
-  padding: 2.5rem 1.5rem 2rem;
-  position: relative;
+  padding: 1.25rem 1.5rem 1rem;
+  position: sticky;
+  top: var(--header-h);
+  z-index: 90;
   overflow: hidden;
 }
 .hero::after {
@@ -353,8 +462,10 @@ body {
 
 .wrapper { max-width: 960px; margin: 0 auto; }
 
-.hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
-.hero-name { font-size: 28px; font-weight: 700; color: var(--fg); line-height: 1.2; margin-bottom: 4px; }
+.hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+.hero-main-name { font-size: 24px; font-weight: 700; color: var(--fg); line-height: 1.2; margin-bottom: 2px; }
+.hero-main-role { font-size: 13px; color: var(--gold-soft); font-weight: 500; margin-bottom: 12px; }
+
 .hero-role { font-size: 15px; color: var(--gold-soft); font-weight: 500; margin-bottom: 16px; }
 .hero-pills { display: flex; flex-wrap: wrap; gap: 6px; }
 .hero-pill { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 999px; background: oklch(0.82 0.16 85 / 0.15); color: var(--gold-soft); border: 0.5px solid oklch(0.82 0.16 85 / 0.3); }
@@ -483,7 +594,6 @@ body {
   .principles { grid-template-columns: 1fr; }
   .tl-item { grid-template-columns: 48px 1fr; }
   .tl-item .badge { display: none; }
-  .hero-name { font-size: 22px; }
   .sticky-progress-wrap { display: none; }
 }
 
@@ -500,6 +610,7 @@ body {
   <p class="sel-eyebrow">Link School · Onboarding</p>
   <h1 class="sel-title">Manual do Líder</h1>
   <p class="sel-sub">Selecione o colaborador</p>
+  <button class="theme-btn" onclick="toggleTheme()" id="sel-theme-btn" style="margin-bottom:1.5rem;" title="Alternar tema">Modo claro</button>
 
   <div class="sel-cards">
     <div class="sel-card" onclick="openView('milena')">
@@ -541,15 +652,17 @@ body {
 <!-- Sticky header -->
 <header class="sticky-header">
   <div class="sticky-header-inner">
-    <div class="sticky-info">
-      <span class="sticky-name">Milena Queiroz</span>
-      <span class="sticky-role">Coordenadora de Comunicação Interna</span>
+    <div class="sticky-left">
+      <button class="sticky-back" onclick="goBack()">← Início</button>
     </div>
-    <div class="sticky-progress-wrap">
-      <div class="sticky-progress-track">
-        <div class="sticky-progress-fill" id="sticky-fill" style="width:0%"></div>
+    <div class="sticky-right">
+      <div class="sticky-progress-wrap">
+        <div class="sticky-progress-track">
+          <div class="sticky-progress-fill" id="sticky-fill" style="width:0%"></div>
+        </div>
+        <span class="sticky-pct" id="sticky-pct">0%</span>
       </div>
-      <span class="sticky-pct" id="sticky-pct">0%</span>
+      <button class="theme-btn" onclick="toggleTheme()" title="Alternar tema" id="theme-btn-milena">Modo claro</button>
     </div>
   </div>
 </header>
@@ -558,6 +671,8 @@ body {
 <div class="hero">
   <div class="wrapper">
     <p class="hero-eyebrow">Manual de Onboarding · Link School</p>
+    <h1 class="hero-main-name">Milena Queiroz</h1>
+    <p class="hero-main-role">Coordenadora de Comunicação Interna</p>
     <div class="hero-pills">
       <span class="hero-pill">Liderança de 2 pessoas</span>
       <span class="hero-pill">Estruturação da área</span>
@@ -913,10 +1028,6 @@ document.addEventListener('DOMContentLoaded', loadState);
 
 <header class="sticky-header">
   <div class="sticky-header-inner">
-    <div class="sticky-info">
-      <span class="sticky-name">Luiz Gevaerd</span>
-      <span class="sticky-role">Community Manager</span>
-    </div>
     <div class="sticky-progress-wrap">
       <div class="sticky-progress-track">
         <div class="sticky-progress-fill" id="sticky-fill" style="width:0%"></div>
@@ -929,6 +1040,8 @@ document.addEventListener('DOMContentLoaded', loadState);
 <div class="hero">
   <div class="wrapper">
     <p class="hero-eyebrow">Manual de Onboarding · Link School</p>
+    <h1 class="hero-main-name">Luiz Gevaerd</h1>
+    <p class="hero-main-role">Community Manager</p>
     <div class="hero-pills">
       <span class="hero-pill">Comunidades de estudantes</span>
       <span class="hero-pill">Engajamento e retenção</span>
@@ -1376,6 +1489,25 @@ function refreshSelectorProgress() {
 
 // ── Init ──
 refreshSelectorProgress();
+
+// ── Theme ──
+function toggleTheme() {
+  document.body.classList.toggle('light');
+  const isLight = document.body.classList.contains('light');
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.textContent = isLight ? 'Modo escuro' : 'Modo claro';
+  });
+}
+
+// Load saved theme
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') {
+    document.body.classList.add('light');
+    document.querySelectorAll('.theme-btn').forEach(btn => btn.textContent = 'Modo escuro');
+  }
+})();
 </script>
 </body>
 </html>
