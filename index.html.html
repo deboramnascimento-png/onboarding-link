@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onboarding — Link School</title>
+<style>
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Shared tokens ── */
+:root {
+  --bg:           oklch(0.18 0.04 260);
+  --card:         oklch(0.23 0.045 262);
+  --secondary:    oklch(0.28 0.05 262);
+  --navy-deep:    oklch(0.14 0.04 260);
+  --gold:         oklch(0.82 0.16 85);
+  --gold-soft:    oklch(0.88 0.12 90);
+  --gold-muted:   oklch(0.60 0.10 85);
+  --fg:           oklch(0.97 0.01 250);
+  --fg-muted:     oklch(0.72 0.03 256);
+  --fg-subtle:    oklch(0.50 0.03 256);
+  --border:       oklch(0.32 0.05 262);
+  --border-soft:  oklch(0.26 0.04 262);
+  --radius-lg:    12px;
+  --radius-xl:    16px;
+  --header-h:     64px;
+  --sidebar-w:    260px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100vh;
+}
+
+/* ── SELECTOR SCREEN ── */
+#selector {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, oklch(0.14 0.04 260), oklch(0.20 0.05 262));
+  position: relative;
+  overflow: hidden;
+}
+
+#selector::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(0.82 0.16 85 / 0.10), transparent 70%);
+  pointer-events: none;
+}
+
+#selector::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(0.82 0.16 85 / 0.06), transparent 70%);
+  pointer-events: none;
+}
+
+.sel-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.sel-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--fg);
+  text-align: center;
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+
+.sel-sub {
+  font-size: 14px;
+  color: var(--fg-muted);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.sel-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 560px;
+}
+
+.sel-card {
+  background: oklch(0.23 0.045 262);
+  border: 0.5px solid oklch(0.26 0.04 262);
+  border-radius: 16px;
+  padding: 1.75rem 1.5rem;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.sel-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, oklch(0.82 0.16 85 / 0.0), oklch(0.82 0.16 85 / 0.0));
+  transition: background 0.2s;
+}
+
+.sel-card:hover {
+  border-color: oklch(0.82 0.16 85 / 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px oklch(0.82 0.16 85 / 0.12);
+}
+
+.sel-card:hover::before {
+  background: linear-gradient(135deg, oklch(0.82 0.16 85 / 0.06), oklch(0.82 0.16 85 / 0.02));
+}
+
+.sel-card:active { transform: translateY(0); }
+
+.sel-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, oklch(0.82 0.16 85 / 0.25), oklch(0.82 0.16 85 / 0.10));
+  border: 1.5px solid oklch(0.82 0.16 85 / 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin: 0 auto 14px;
+}
+
+.sel-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 4px;
+}
+
+.sel-role {
+  font-size: 12px;
+  color: var(--gold-soft);
+  font-weight: 500;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.sel-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+}
+
+.sel-pill {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: oklch(0.82 0.16 85 / 0.12);
+  color: var(--fg-muted);
+  border: 0.5px solid oklch(0.82 0.16 85 / 0.2);
+}
+
+.sel-progress {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sel-prog-track {
+  flex: 1;
+  height: 3px;
+  background: oklch(0.28 0.05 262);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.sel-prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold-muted), var(--gold));
+  border-radius: 99px;
+  transition: width 0.4s;
+}
+
+.sel-prog-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+/* ── INDIVIDUAL VIEWS ── */
+.view { display: none; }
+.view.active { display: block; }
+
+/* ── Back button ── */
+.back-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 200;
+  background: var(--card);
+  border: 0.5px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--fg-muted);
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  gap: 6px;
+  transition: border-color 0.15s, color 0.15s;
+  backdrop-filter: blur(8px);
+}
+
+.back-btn:hover { border-color: var(--gold-muted); color: var(--gold-soft); }
+.back-btn.visible { display: flex; }
+
+/* ── Shared styles (both views) ── */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:           oklch(0.18 0.04 260);
+  --card:         oklch(0.23 0.045 262);
+  --secondary:    oklch(0.28 0.05 262);
+  --navy-deep:    oklch(0.14 0.04 260);
+  --gold:         oklch(0.82 0.16 85);
+  --gold-soft:    oklch(0.88 0.12 90);
+  --gold-muted:   oklch(0.60 0.10 85);
+  --fg:           oklch(0.97 0.01 250);
+  --fg-muted:     oklch(0.72 0.03 256);
+  --fg-subtle:    oklch(0.50 0.03 256);
+  --border:       oklch(0.32 0.05 262);
+  --border-soft:  oklch(0.26 0.04 262);
+  --radius-lg:    12px;
+  --radius-xl:    16px;
+  --header-h:     64px;
+  --sidebar-w:    260px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100vh;
+  padding: 0 0 4rem;
+}
+
+/* ── Sticky header ── */
+.sticky-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  background: oklch(0.14 0.04 260 / 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--border-soft);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+}
+
+.sticky-header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sticky-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--fg);
+  white-space: nowrap;
+}
+
+.sticky-role {
+  font-size: 12px;
+  color: var(--gold-soft);
+  white-space: nowrap;
+}
+
+.sticky-info { display: flex; flex-direction: column; gap: 1px; }
+
+.sticky-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  max-width: 280px;
+}
+
+.sticky-progress-track {
+  flex: 1;
+  height: 4px;
+  background: var(--secondary);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.sticky-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold-muted), var(--gold));
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+.sticky-pct {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+/* ── Hero (below fixed header) ── */
+.hero {
+  margin-top: var(--header-h);
+  background: linear-gradient(135deg, oklch(0.14 0.04 260), oklch(0.22 0.05 262));
+  border-bottom: 1px solid var(--border-soft);
+  padding: 2.5rem 1.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(0.82 0.16 85 / 0.12), transparent 70%);
+  pointer-events: none;
+}
+
+.wrapper { max-width: 960px; margin: 0 auto; }
+
+.hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.hero-name { font-size: 28px; font-weight: 700; color: var(--fg); line-height: 1.2; margin-bottom: 4px; }
+.hero-role { font-size: 15px; color: var(--gold-soft); font-weight: 500; margin-bottom: 16px; }
+.hero-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.hero-pill { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 999px; background: oklch(0.82 0.16 85 / 0.15); color: var(--gold-soft); border: 0.5px solid oklch(0.82 0.16 85 / 0.3); }
+
+/* ── Layout com sidebar ── */
+.page-body {
+  padding: 2rem 1.5rem 0;
+}
+
+.page-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr var(--sidebar-w);
+  gap: 2rem;
+  align-items: start;
+}
+
+.main-col { min-width: 0; }
+
+/* ── Sidebar checklist ── */
+.sidebar {
+  position: sticky;
+  top: calc(var(--header-h) + 1.5rem);
+}
+
+.checklist-section {
+  background: var(--card);
+  border: 0.5px solid var(--border-soft);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem;
+}
+
+.checklist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.checklist-title { font-size: 11px; font-weight: 600; color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.checklist-count { font-size: 12px; font-weight: 600; color: var(--gold); }
+
+.cl-progress-track { width: 100%; height: 4px; background: var(--secondary); border-radius: 99px; overflow: hidden; margin-bottom: 1rem; }
+.cl-progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold-muted), var(--gold)); border-radius: 99px; transition: width 0.35s ease; }
+
+.check-item { display: flex; align-items: flex-start; gap: 8px; padding: 7px 0; border-bottom: 0.5px solid var(--border-soft); cursor: pointer; user-select: none; }
+.check-item:last-child { border-bottom: none; }
+.check-item:hover .check-box { border-color: var(--gold-muted); }
+
+.check-box { width: 16px; height: 16px; border-radius: 3px; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.15s, border-color 0.15s; margin-top: 1px; }
+.check-box.checked { background: var(--gold); border-color: var(--gold); }
+.check-mark { display: none; font-size: 9px; color: var(--navy-deep); font-weight: 700; }
+.check-box.checked .check-mark { display: block; }
+
+.check-content { display: flex; flex-direction: column; gap: 1px; flex: 1; }
+.check-text { font-size: 12px; color: var(--fg); line-height: 1.4; transition: color 0.15s; }
+.check-text.done { text-decoration: line-through; color: var(--fg-subtle); }
+.check-when { font-size: 10px; color: var(--fg-subtle); }
+
+/* ── Principles ── */
+.principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 2rem; }
+.principle-card { background: var(--card); border: 0.5px solid var(--border-soft); border-radius: var(--radius-lg); padding: 14px; text-align: center; }
+.principle-icon { font-size: 20px; margin-bottom: 6px; display: block; }
+.principle-title { font-size: 12px; font-weight: 600; color: var(--gold-soft); margin-bottom: 4px; }
+.principle-desc { font-size: 11px; color: var(--fg-muted); line-height: 1.45; }
+
+/* ── Phase header ── */
+.phase-header { display: flex; align-items: center; gap: 10px; margin: 2rem 0 0.75rem; }
+.phase-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 12px; border-radius: 999px; white-space: nowrap; }
+.ph-ant { background: oklch(0.82 0.16 85 / 0.15); color: var(--gold-soft); border: 0.5px solid oklch(0.82 0.16 85 / 0.3); }
+.ph-d1a { background: oklch(0.60 0.16 230 / 0.15); color: oklch(0.80 0.10 230); border: 0.5px solid oklch(0.60 0.16 230 / 0.3); }
+.ph-d1  { background: oklch(0.65 0.18 145 / 0.12); color: oklch(0.80 0.12 145); border: 0.5px solid oklch(0.65 0.18 145 / 0.3); }
+.ph-s1  { background: oklch(0.60 0.16 230 / 0.15); color: oklch(0.80 0.10 230); border: 0.5px solid oklch(0.60 0.16 230 / 0.3); }
+.ph-m1  { background: oklch(0.65 0.18 145 / 0.12); color: oklch(0.80 0.12 145); border: 0.5px solid oklch(0.65 0.18 145 / 0.3); }
+.ph-m2  { background: oklch(0.78 0.14 85 / 0.15); color: oklch(0.88 0.10 85); border: 0.5px solid oklch(0.78 0.14 85 / 0.3); }
+.ph-m3  { background: oklch(0.82 0.16 85 / 0.20); color: var(--gold); border: 0.5px solid oklch(0.82 0.16 85 / 0.4); }
+.phase-line { flex: 1; height: 0.5px; background: var(--border-soft); }
+
+/* ── Step cards ── */
+.steps-grid { display: grid; gap: 8px; }
+.step-card { background: var(--card); border: 0.5px solid var(--border-soft); border-radius: var(--radius-lg); padding: 14px 16px; display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; align-items: start; transition: border-color 0.15s; }
+.step-card:hover { border-color: var(--border); }
+.step-card.milestone { border-left: 3px solid; border-radius: 0 var(--radius-lg) var(--radius-lg) 0; padding-left: 13px; }
+.ms-gold  { border-left-color: var(--gold); }
+.ms-amber { border-left-color: oklch(0.78 0.14 85); }
+.ms-final { border-left-color: var(--gold); background: oklch(0.82 0.16 85 / 0.06); }
+.step-card.marco-jd { border: 1.5px solid oklch(0.82 0.16 85 / 0.5); background: oklch(0.82 0.16 85 / 0.05); border-radius: var(--radius-lg); }
+.marco-jd-label { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); background: oklch(0.82 0.16 85 / 0.15); border: 0.5px solid oklch(0.82 0.16 85 / 0.35); padding: 2px 8px; border-radius: 999px; margin-bottom: 6px; grid-column: 1 / -1; }
+
+.step-top { display: flex; align-items: flex-start; gap: 10px; }
+.step-icon { font-size: 18px; margin-top: 1px; flex-shrink: 0; }
+.step-title { font-size: 14px; font-weight: 500; color: var(--fg); line-height: 1.4; }
+.step-desc { font-size: 13px; color: var(--fg-muted); line-height: 1.55; grid-column: 1 / -1; padding-left: 28px; margin-top: 2px; }
+.step-meta { grid-row: 1; grid-column: 2; }
+
+/* ── Badges ── */
+.badge { font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 999px; white-space: nowrap; display: inline-block; }
+.b-lider  { background: oklch(0.60 0.16 230 / 0.18); color: oklch(0.82 0.10 230); border: 0.5px solid oklch(0.60 0.16 230 / 0.35); }
+.b-people { background: oklch(0.65 0.18 145 / 0.15); color: oklch(0.78 0.12 145); border: 0.5px solid oklch(0.65 0.18 145 / 0.3); }
+.b-buddy  { background: oklch(0.82 0.16 85 / 0.15); color: var(--gold-soft); border: 0.5px solid oklch(0.82 0.16 85 / 0.3); }
+.b-time   { background: oklch(0.50 0.05 262 / 0.4); color: var(--fg-muted); border: 0.5px solid var(--border); }
+.b-milena { background: oklch(0.82 0.16 85 / 0.20); color: var(--gold); border: 0.5px solid oklch(0.82 0.16 85 / 0.4); font-weight: 600; }
+
+/* ── Timeline ── */
+.timeline-card { background: var(--card); border: 0.5px solid var(--border-soft); border-radius: var(--radius-lg); padding: 16px 20px 4px; }
+.timeline { position: relative; padding-left: 20px; }
+.timeline::before { content: ''; position: absolute; left: 7px; top: 14px; bottom: 14px; width: 1px; background: var(--border-soft); }
+.tl-item { display: grid; grid-template-columns: 56px 1fr auto; gap: 0 12px; align-items: start; padding: 11px 0; border-bottom: 0.5px solid var(--border-soft); position: relative; }
+.tl-item:last-child { border-bottom: none; }
+.tl-item::before { content: ''; position: absolute; left: -14px; top: 16px; width: 8px; height: 8px; border-radius: 50%; background: var(--card); border: 1.5px solid var(--border); }
+.tl-item.hl::before { background: var(--gold); border-color: var(--gold); }
+.tl-time { font-size: 12px; font-weight: 600; color: var(--fg-subtle); padding-top: 2px; font-variant-numeric: tabular-nums; }
+.tl-item.hl .tl-time { color: var(--gold-muted); }
+.tl-title { font-size: 14px; font-weight: 500; color: var(--fg); line-height: 1.4; }
+.tl-sub   { font-size: 12px; color: var(--fg-muted); margin-top: 2px; line-height: 1.4; }
+
+/* ── Legend ── */
+.legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 2rem; padding: 12px 14px; background: var(--card); border: 0.5px solid var(--border-soft); border-radius: var(--radius-lg); align-items: center; }
+.legend-label { font-size: 11px; color: var(--fg-subtle); margin-right: 2px; }
+
+.footer { margin-top: 3rem; text-align: center; font-size: 11px; color: var(--fg-subtle); letter-spacing: 0.04em; padding-bottom: 2rem; }
+
+/* ── Responsive ── */
+@media (max-width: 720px) {
+  .page-inner { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+  .principles { grid-template-columns: 1fr; }
+  .tl-item { grid-template-columns: 48px 1fr; }
+  .tl-item .badge { display: none; }
+  .hero-name { font-size: 22px; }
+  .sticky-progress-wrap { display: none; }
+}
+
+
+@media (max-width: 480px) {
+  .sel-cards { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Selector -->
+<div id="selector">
+  <p class="sel-eyebrow">Link School · Onboarding</p>
+  <h1 class="sel-title">Manual do Líder</h1>
+  <p class="sel-sub">Selecione o colaborador</p>
+
+  <div class="sel-cards">
+    <div class="sel-card" onclick="openView('milena')">
+      <div class="sel-avatar">👩‍💼</div>
+      <div class="sel-name">Milena Queiroz</div>
+      <div class="sel-role">Coordenadora de Comunicação Interna</div>
+      <div class="sel-pills">
+        <span class="sel-pill">Liderança</span>
+        <span class="sel-pill">Estruturação</span>
+        <span class="sel-pill">Interfaces</span>
+      </div>
+      <div class="sel-progress">
+        <div class="sel-prog-track"><div class="sel-prog-fill" id="sel-prog-milena" style="width:0%"></div></div>
+        <span class="sel-prog-label" id="sel-label-milena">0%</span>
+      </div>
+    </div>
+
+    <div class="sel-card" onclick="openView('luiz')">
+      <div class="sel-avatar">👨‍💼</div>
+      <div class="sel-name">Luiz Gevaerd</div>
+      <div class="sel-role">Community Manager</div>
+      <div class="sel-pills">
+        <span class="sel-pill">Comunidades</span>
+        <span class="sel-pill">Engajamento</span>
+        <span class="sel-pill">Canais</span>
+      </div>
+      <div class="sel-progress">
+        <div class="sel-prog-track"><div class="sel-prog-fill" id="sel-prog-luiz" style="width:0%"></div></div>
+        <span class="sel-prog-label" id="sel-label-luiz">0%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Milena view -->
+<div id="view-milena" class="view">
+
+
+<!-- Sticky header -->
+<header class="sticky-header">
+  <div class="sticky-header-inner">
+    <div class="sticky-info">
+      <span class="sticky-name">Milena Queiroz</span>
+      <span class="sticky-role">Coordenadora de Comunicação Interna</span>
+    </div>
+    <div class="sticky-progress-wrap">
+      <div class="sticky-progress-track">
+        <div class="sticky-progress-fill" id="sticky-fill" style="width:0%"></div>
+      </div>
+      <span class="sticky-pct" id="sticky-pct">0%</span>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="wrapper">
+    <p class="hero-eyebrow">Manual de Onboarding · Link School</p>
+    <h1 class="hero-name">Milena Queiroz</h1>
+    <p class="hero-role">Coordenadora de Comunicação Interna</p>
+    <div class="hero-pills">
+      <span class="hero-pill">Liderança de 2 pessoas</span>
+      <span class="hero-pill">Estruturação da área</span>
+      <span class="hero-pill">Interface com outras áreas</span>
+      <span class="hero-pill">Reporte à liderança</span>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="page-inner">
+
+    <!-- Coluna principal -->
+    <div class="main-col">
+
+      <!-- Princípios -->
+      <div style="margin-top: 0; margin-bottom: 2rem;">
+        <div class="principles">
+          <div class="principle-card">
+            <span class="principle-icon">🧭</span>
+            <div class="principle-title">Contexto rico</div>
+            <div class="principle-desc">Ofereça acesso a pessoas, histórico e pontos em aberto da área.</div>
+          </div>
+          <div class="principle-card">
+            <span class="principle-icon">🚀</span>
+            <div class="principle-title">Espaço para propor</div>
+            <div class="principle-desc">A Milena traz diagnóstico e direção. O líder orienta e valida.</div>
+          </div>
+          <div class="principle-card">
+            <span class="principle-icon">🤝</span>
+            <div class="principle-title">Alinhamento contínuo</div>
+            <div class="principle-desc">A 1:1 é espaço de parceria — não de checagem de tarefas.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legenda -->
+      <div class="legend">
+        <span class="legend-label">Responsável:</span>
+        <span class="badge b-lider">Líder</span>
+        <span class="badge b-people">People</span>
+        <span class="badge b-buddy">Buddy</span>
+        <span class="badge b-milena">Milena</span>
+      </div>
+
+      <!-- Antes do Dia 1 -->
+      <div class="phase-header">
+        <span class="phase-tag ph-ant">Antes do dia 1</span>
+        <div class="phase-line"></div>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">📚</span><span class="step-title">Organize o contexto da área</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder</span></div>
+          <div class="step-desc">Prepare no Notion: histórico da área, iniciativas em andamento, canais existentes, stakeholders-chave e pontos ainda em aberto. Quanto mais contexto, mais rápido ela ganha velocidade.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">📄</span><span class="step-title">Separe o JD para a Semana 1</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder</span></div>
+          <div class="step-desc">Tenha o Job Description da Milena pronto para ser lido e discutido juntos — um ponto de partida para alinhar escopo, expectativas e o que pode evoluir com ela no papel.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">👥</span><span class="step-title">Escolha um Buddy de par</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder</span></div>
+          <div class="step-desc">Alguém de outra área com interface real com comunicação interna — que ajude a Milena a ler a cultura e o ritmo da Link a partir de uma relação horizontal.</div>
+        </div>
+      </div>
+
+      <!-- Dia 1 — Agenda -->
+      <div class="phase-header">
+        <span class="phase-tag ph-d1a">Dia 1 — agenda da Milena</span>
+        <div class="phase-line"></div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline">
+          <div class="tl-item hl">
+            <span class="tl-time">09:30</span>
+            <div><div class="tl-title">Onboarding People</div><div class="tl-sub">Integração institucional, cultura e boas-vindas à Link</div></div>
+            <span class="badge b-people">People</span>
+          </div>
+          <div class="tl-item">
+            <span class="tl-time">11:30</span>
+            <div><div class="tl-title">Apresentação para os staffs</div><div class="tl-sub">Conhecer o time de forma ampla</div></div>
+            <span class="badge b-people">People</span>
+          </div>
+          <div class="tl-item">
+            <span class="tl-time">12:00</span>
+            <div><div class="tl-title">Almoço com o time</div><div class="tl-sub">Conexão informal, sem pauta</div></div>
+            <span class="badge b-time">Líder + time</span>
+          </div>
+          <div class="tl-item hl">
+            <span class="tl-time">14:00</span>
+            <div><div class="tl-title">Conversa de abertura com o líder</div><div class="tl-sub">Contexto da área, pontos em aberto e como os dois vão trabalhar juntos</div></div>
+            <span class="badge b-lider">Líder</span>
+          </div>
+          <div class="tl-item">
+            <span class="tl-time">15:30</span>
+            <div><div class="tl-title">Café com o time</div><div class="tl-sub">Clima, cultura e primeiras impressões</div></div>
+            <span class="badge b-time">Líder + time</span>
+          </div>
+          <div class="tl-item">
+            <span class="tl-time">16:30</span>
+            <div><div class="tl-title">Encontro com o Buddy</div><div class="tl-sub">Apresentação e acesso às ferramentas e rituais da Link</div></div>
+            <span class="badge b-buddy">Buddy</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dia 1 — Responsabilidades -->
+      <div class="phase-header">
+        <span class="phase-tag ph-d1">Dia 1 — responsabilidades do líder</span>
+        <div class="phase-line"></div>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">🤝</span><span class="step-title">Boas-vindas e contexto da área</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder + People</span></div>
+          <div class="step-desc">Apresente o papel estratégico da comunicação interna na Link e o que a chegada da Milena representa. Abra espaço para perguntas e primeiras impressões.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">🎯</span><span class="step-title">Alinhe estilo de trabalho e comunicação</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder</span></div>
+          <div class="step-desc">Combine como os dois vão se comunicar: frequência de alinhamento, como ela traz decisões relevantes e quando acionar o líder. Simples e direto.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">📅</span><span class="step-title">Agende a 1:1 quinzenal</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder</span></div>
+          <div class="step-desc">Estabeleça o ritual quinzenal — espaço para alinhamentos, decisões relevantes e contexto estratégico. Saia do Dia 1 com as datas já marcadas.</div>
+        </div>
+      </div>
+
+      <!-- Semana 1 -->
+      <div class="phase-header">
+        <span class="phase-tag ph-s1">Semana 1 — dias 1 a 7</span>
+        <div class="phase-line"></div>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card marco-jd">
+          <span class="marco-jd-label">⭐ Marco da semana</span>
+          <div class="step-top"><span class="step-icon">📋</span><span class="step-title">Leitura e alinhamento do JD</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder + Milena</span></div>
+          <div class="step-desc">Milena lê o Job Description e traz suas perspectivas em conversa com o líder — o que faz sentido, o que quer aprofundar, como enxerga o escopo. Ponto de partida para alinhar expectativas de ambos os lados.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">🔍</span><span class="step-title">Imersão na área</span></div>
+          <div class="step-meta"><span class="badge b-milena">Milena</span></div>
+          <div class="step-desc">Milena mapeia o que existe — canais, rituais, processos e gaps. O líder garante acesso a pessoas e materiais conforme ela for solicitando.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">👂</span><span class="step-title">1:1s com o time direto</span></div>
+          <div class="step-meta"><span class="badge b-milena">Milena</span></div>
+          <div class="step-desc">Milena agenda e conduz as conversas individuais com as 2 pessoas do time. Momento de escuta: entender o contexto, as expectativas e o que cada um precisa da nova coordenadora.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">🔗</span><span class="step-title">Conexões com interfaces estratégicas</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder</span></div>
+          <div class="step-desc">O líder apresenta as áreas parceiras com quem a Milena vai ter interface direta. As conversas de aprofundamento ficam com ela, no formato que preferir.</div>
+        </div>
+      </div>
+
+      <!-- Mês 1 -->
+      <div class="phase-header">
+        <span class="phase-tag ph-m1">Mês 1 — dias 8 a 30</span>
+        <div class="phase-line"></div>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">🗺️</span><span class="step-title">Diagnóstico e proposta de direção</span></div>
+          <div class="step-meta"><span class="badge b-milena">Milena</span></div>
+          <div class="step-desc">Milena estrutura e apresenta o diagnóstico da área, com uma proposta de direção para os próximos passos. O líder dá feedback e alinha o que precisa de ajuste.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">📋</span><span class="step-title">Co-construção do PDI</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder + Milena</span></div>
+          <div class="step-desc">Milena traz sua visão sobre o que quer desenvolver. O líder contribui com o contexto da Link e os dois constroem o PDI juntos, validando com People.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">💬</span><span class="step-title">1:1 quinzenal de alinhamento</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder</span></div>
+          <div class="step-desc">Espaço de parceria: o que alinhar, o que destravar, o que levar ao líder. A pergunta central é "o que você precisa de mim agora?"</div>
+        </div>
+        <div class="step-card milestone ms-gold">
+          <div class="step-top"><span class="step-icon">✅</span><span class="step-title">Checkpoint Dia 30</span></div>
+          <div class="step-meta"><span class="badge b-people">Líder + People</span></div>
+          <div class="step-desc">Revisão de adaptação, primeiras entregas e ajuste de rota. Os dois calibram o PDI e definem os próximos movimentos. Marco obrigatório.</div>
+        </div>
+      </div>
+
+      <!-- Mês 2 -->
+      <div class="phase-header">
+        <span class="phase-tag ph-m2">Mês 2 — dias 31 a 60</span>
+        <div class="phase-line"></div>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">🚀</span><span class="step-title">Iniciativas com autonomia crescente</span></div>
+          <div class="step-meta"><span class="badge b-milena">Milena</span></div>
+          <div class="step-desc">Milena conduz as iniciativas de comunicação interna com crescente independência, mantendo o líder informado nas decisões que impactam outras áreas ou a estratégia da Link.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">🗣</span><span class="step-title">Feedback baseado em impacto</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder</span></div>
+          <div class="step-desc">Feedback sobre o impacto gerado nas pessoas, nas áreas parceiras e na cultura. Com fatos e exemplos concretos, a cada 30 dias ou quando surgir algo relevante.</div>
+        </div>
+        <div class="step-card milestone ms-amber">
+          <div class="step-top"><span class="step-icon">📊</span><span class="step-title">Avaliação parcial — Dia 60</span></div>
+          <div class="step-meta"><span class="badge b-people">Líder + People</span></div>
+          <div class="step-desc">Avalie impacto das iniciativas, maturidade da liderança do time e construção das interfaces. Atualize o PDI com os próximos objetivos. Marco obrigatório.</div>
+        </div>
+      </div>
+
+      <!-- Mês 3 -->
+      <div class="phase-header">
+        <span class="phase-tag ph-m3">Mês 3 — encerramento</span>
+        <div class="phase-line"></div>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card milestone ms-final">
+          <div class="step-top"><span class="step-icon">🏆</span><span class="step-title">Encerramento e abertura do ciclo contínuo — Dia 90</span></div>
+          <div class="step-meta"><span class="badge b-people">Líder + People</span></div>
+          <div class="step-desc">Feche o onboarding, celebre a chegada da Milena ao time e abra o próximo ciclo de desenvolvimento com ela já protagonizando a agenda.</div>
+        </div>
+      </div>
+
+      <div class="footer">Link School · Onboarding da Milena Queiroz · junho de 2026</div>
+    </div>
+
+    <!-- Sidebar checklist -->
+    <aside class="sidebar">
+      <div class="checklist-section">
+        <div class="checklist-header">
+          <p class="checklist-title">Checklist do líder</p>
+          <span class="checklist-count" id="cl-count">0 / 8</span>
+        </div>
+        <div class="cl-progress-track">
+          <div class="cl-progress-fill" id="cl-fill" style="width: 0%"></div>
+        </div>
+        <div id="checklist">
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-content">
+              <span class="check-text">Preparou contexto rico da área antes do Dia 1?</span>
+              <span class="check-when">Antes do dia 1</span>
+            </div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-content">
+              <span class="check-text">Fez o alinhamento do JD com a Milena na Semana 1?</span>
+              <span class="check-when">Semana 1</span>
+            </div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-content">
+              <span class="check-text">Garantiu acesso às pessoas e materiais que ela foi pedindo?</span>
+              <span class="check-when">Semana 1</span>
+            </div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-content">
+              <span class="check-text">Co-construiu o PDI com ela até o Dia 30?</span>
+              <span class="check-when">Até dia 30</span>
+            </div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-content">
+              <span class="check-text">Manteve a 1:1 quinzenal com espaço para a pauta dela?</span>
+              <span class="check-when">Dias 1–60</span>
+            </div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-content">
+              <span class="check-text">Deu feedback baseado em impacto, com fatos e exemplos?</span>
+              <span class="check-when">A cada 30 dias</span>
+            </div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-content">
+              <span class="check-text">Fez o checkpoint do Dia 60 e atualizou o PDI?</span>
+              <span class="check-when">Dia 60</span>
+            </div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-content">
+              <span class="check-text">Celebrou a chegada da Milena e abriu o próximo ciclo?</span>
+              <span class="check-when">Dia 90</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'checklist_' + document.title.replace(/\s+/g, '_');
+
+function toggle(el) {
+  el.querySelector('.check-box').classList.toggle('checked');
+  el.querySelector('.check-text').classList.toggle('done');
+  updateProgress();
+  saveState();
+}
+
+function updateProgress() {
+  const total = document.querySelectorAll('.check-item').length;
+  const done  = document.querySelectorAll('.check-box.checked').length;
+  const pct   = Math.round((done / total) * 100);
+  document.getElementById('cl-fill').style.width = pct + '%';
+  document.getElementById('cl-count').textContent = done + ' / ' + total;
+  document.getElementById('sticky-fill').style.width = pct + '%';
+  document.getElementById('sticky-pct').textContent = pct + '%';
+}
+
+function saveState() {
+  const items = document.querySelectorAll('.check-item');
+  const state = Array.from(items).map(el => el.querySelector('.check-box').classList.contains('checked'));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function loadState() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (!saved) return;
+  const state = JSON.parse(saved);
+  const items = document.querySelectorAll('.check-item');
+  items.forEach((el, i) => {
+    if (state[i]) {
+      el.querySelector('.check-box').classList.add('checked');
+      el.querySelector('.check-text').classList.add('done');
+    }
+  });
+  updateProgress();
+}
+
+document.addEventListener('DOMContentLoaded', loadState);
+</script>
+
+</div>
+
+<!-- Luiz view -->
+<div id="view-luiz" class="view">
+
+
+<header class="sticky-header">
+  <div class="sticky-header-inner">
+    <div class="sticky-info">
+      <span class="sticky-name">Luiz Gevaerd</span>
+      <span class="sticky-role">Community Manager</span>
+    </div>
+    <div class="sticky-progress-wrap">
+      <div class="sticky-progress-track">
+        <div class="sticky-progress-fill" id="sticky-fill" style="width:0%"></div>
+      </div>
+      <span class="sticky-pct" id="sticky-pct">0%</span>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrapper">
+    <p class="hero-eyebrow">Manual de Onboarding · Link School</p>
+    <h1 class="hero-name">Luiz Gevaerd</h1>
+    <p class="hero-role">Community Manager</p>
+    <div class="hero-pills">
+      <span class="hero-pill">Comunidades de estudantes</span>
+      <span class="hero-pill">Engajamento e retenção</span>
+      <span class="hero-pill">Gestão de canais</span>
+      <span class="hero-pill">Cultura Link</span>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="page-inner">
+
+    <div class="main-col">
+
+      <div style="margin-bottom: 2rem;">
+        <div class="principles">
+          <div class="principle-card">
+            <span class="principle-icon">🧭</span>
+            <div class="principle-title">Contexto rico</div>
+            <div class="principle-desc">Ofereça acesso às comunidades, histórico e pontos em aberto da área.</div>
+          </div>
+          <div class="principle-card">
+            <span class="principle-icon">🎙️</span>
+            <div class="principle-title">Escuta antes de agir</div>
+            <div class="principle-desc">A Semana 1 é de imersão — ele lê as comunidades antes de propor qualquer mudança.</div>
+          </div>
+          <div class="principle-card">
+            <span class="principle-icon">🤝</span>
+            <div class="principle-title">Alinhamento contínuo</div>
+            <div class="principle-desc">A 1:1 é espaço de parceria — não de checagem de tarefas.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <span class="legend-label">Responsável:</span>
+        <span class="badge b-lider">Líder</span>
+        <span class="badge b-people">People</span>
+        <span class="badge b-buddy">Buddy</span>
+        <span class="badge b-luiz">Luiz</span>
+      </div>
+
+      <!-- Antes do Dia 1 -->
+      <div class="phase-header">
+        <span class="phase-tag ph-ant">Antes do dia 1</span>
+        <div class="phase-line"></div>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">📚</span><span class="step-title">Organize o contexto das comunidades</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder</span></div>
+          <div class="step-desc">Prepare no Notion: mapa das comunidades existentes, canais ativos, métricas de engajamento, iniciativas anteriores e os pontos ainda sem solução. Ele já tem bagagem — contexto rico acelera a leitura do novo território.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">📄</span><span class="step-title">Separe o JD para a Semana 1</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder</span></div>
+          <div class="step-desc">Tenha o Job Description do Luiz pronto para ser lido e discutido juntos — ponto de partida para alinhar escopo, o que é sucesso no papel e o que pode evoluir com ele na função.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">👥</span><span class="step-title">Escolha um Buddy de par</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder</span></div>
+          <div class="step-desc">Alguém que já tenha contato próximo com os estudantes ou que conheça bem a cultura Link — para ajudá-lo a ler o perfil das comunidades daqui a partir de uma relação horizontal.</div>
+        </div>
+      </div>
+
+      <!-- Dia 1 — Agenda -->
+      <div class="phase-header">
+        <span class="phase-tag ph-d1a">Dia 1 — agenda do Luiz</span>
+        <div class="phase-line"></div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline">
+          <div class="tl-item hl">
+            <span class="tl-time">09:30</span>
+            <div><div class="tl-title">Onboarding People</div><div class="tl-sub">Integração institucional, cultura e boas-vindas à Link</div></div>
+            <span class="badge b-people">People</span>
+          </div>
+          <div class="tl-item">
+            <span class="tl-time">11:30</span>
+            <div><div class="tl-title">Apresentação para os staffs</div><div class="tl-sub">Conhecer o time de forma ampla</div></div>
+            <span class="badge b-people">People</span>
+          </div>
+          <div class="tl-item">
+            <span class="tl-time">12:00</span>
+            <div><div class="tl-title">Almoço com o time</div><div class="tl-sub">Conexão informal, sem pauta</div></div>
+            <span class="badge b-time">Líder + time</span>
+          </div>
+          <div class="tl-item hl">
+            <span class="tl-time">14:00</span>
+            <div><div class="tl-title">Conversa de abertura com o líder</div><div class="tl-sub">Contexto das comunidades, pontos em aberto e como os dois vão trabalhar juntos</div></div>
+            <span class="badge b-lider">Líder</span>
+          </div>
+          <div class="tl-item">
+            <span class="tl-time">15:30</span>
+            <div><div class="tl-title">Café com o time</div><div class="tl-sub">Clima, cultura e primeiras impressões</div></div>
+            <span class="badge b-time">Líder + time</span>
+          </div>
+          <div class="tl-item">
+            <span class="tl-time">16:30</span>
+            <div><div class="tl-title">Encontro com o Buddy</div><div class="tl-sub">Apresentação, acesso às ferramentas e primeiros rituais das comunidades</div></div>
+            <span class="badge b-buddy">Buddy</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dia 1 — Responsabilidades -->
+      <div class="phase-header">
+        <span class="phase-tag ph-d1">Dia 1 — responsabilidades do líder</span>
+        <div class="phase-line"></div>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">🤝</span><span class="step-title">Boas-vindas e contexto das comunidades</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder + People</span></div>
+          <div class="step-desc">Apresente o papel estratégico das comunidades de estudantes para a Link e o que a chegada do Luiz representa para essa frente. Abra espaço para ele compartilhar referências do que já fez.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">🎯</span><span class="step-title">Alinhe estilo de trabalho e comunicação</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder</span></div>
+          <div class="step-desc">Combine como os dois vão se comunicar: frequência de alinhamento, como ele traz decisões relevantes e quando acionar o líder. Deixe claro que ele tem espaço para agir.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">📅</span><span class="step-title">Agende a 1:1 quinzenal</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder</span></div>
+          <div class="step-desc">Estabeleça o ritual quinzenal — espaço para alinhamentos, decisões relevantes e contexto estratégico. Saia do Dia 1 com as datas já marcadas.</div>
+        </div>
+      </div>
+
+      <!-- Semana 1 -->
+      <div class="phase-header">
+        <span class="phase-tag ph-s1">Semana 1 — dias 1 a 7</span>
+        <div class="phase-line"></div>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card marco">
+          <span class="marco-label">⭐ Marco da semana</span>
+          <div class="step-top"><span class="step-icon">📋</span><span class="step-title">Leitura e alinhamento do JD</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder + Luiz</span></div>
+          <div class="step-desc">Luiz lê o Job Description e traz suas perspectivas em conversa com o líder — o que faz sentido, onde enxerga oportunidade e como vê o escopo do papel. Ponto de partida para alinhar expectativas de ambos os lados.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">👁️</span><span class="step-title">Imersão nas comunidades</span></div>
+          <div class="step-meta"><span class="badge b-luiz">Luiz</span></div>
+          <div class="step-desc">Luiz acessa e observa as comunidades de estudantes da Link — leitura ativa do clima, do tom e dos perfis de participação. O líder garante os acessos que ele for precisando.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">🎓</span><span class="step-title">Conversas com estudantes referência</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder</span></div>
+          <div class="step-desc">O líder conecta o Luiz com 2 a 3 estudantes que são referência nas comunidades. As conversas ficam com ele — escuta ativa antes de qualquer proposta.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">🗺️</span><span class="step-title">Mapeamento de canais e rituais</span></div>
+          <div class="step-meta"><span class="badge b-luiz">Luiz</span></div>
+          <div class="step-desc">Luiz documenta os canais existentes, frequência de interação, rituais ativos e gaps de engajamento. Base para a proposta de direção que vem no Mês 1.</div>
+        </div>
+      </div>
+
+      <!-- Mês 1 -->
+      <div class="phase-header">
+        <span class="phase-tag ph-m1">Mês 1 — dias 8 a 30</span>
+        <div class="phase-line"></div>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">📣</span><span class="step-title">Primeiras ações nas comunidades</span></div>
+          <div class="step-meta"><span class="badge b-luiz">Luiz</span></div>
+          <div class="step-desc">Com o mapeamento em mãos, Luiz propõe e executa as primeiras iniciativas — uma ação de engajamento, um ajuste de canal ou uma interação proativa com estudantes. O líder acompanha o resultado, não o processo.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">📋</span><span class="step-title">Co-construção do PDI</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder + Luiz</span></div>
+          <div class="step-desc">Luiz traz sua visão sobre o que quer desenvolver na Link. O líder contribui com o contexto e os dois constroem o PDI juntos, validando com People.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">💬</span><span class="step-title">1:1 quinzenal de alinhamento</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder</span></div>
+          <div class="step-desc">Espaço de parceria: o que alinhar, o que destravar, o que levar ao líder. A pergunta central é "o que você precisa de mim agora?"</div>
+        </div>
+        <div class="step-card milestone ms-gold">
+          <div class="step-top"><span class="step-icon">✅</span><span class="step-title">Checkpoint Dia 30</span></div>
+          <div class="step-meta"><span class="badge b-people">Líder + People</span></div>
+          <div class="step-desc">Revisão de adaptação, mapeamento entregue e primeiras ações realizadas. Os dois calibram o PDI e definem os próximos movimentos. Marco obrigatório.</div>
+        </div>
+      </div>
+
+      <!-- Mês 2 -->
+      <div class="phase-header">
+        <span class="phase-tag ph-m2">Mês 2 — dias 31 a 60</span>
+        <div class="phase-line"></div>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">🚀</span><span class="step-title">Iniciativas com autonomia crescente</span></div>
+          <div class="step-meta"><span class="badge b-luiz">Luiz</span></div>
+          <div class="step-desc">Luiz conduz as comunidades com crescente independência, mantendo o líder informado nas decisões que impactam outras áreas ou a estratégia da Link.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-top"><span class="step-icon">🗣</span><span class="step-title">Feedback baseado em impacto</span></div>
+          <div class="step-meta"><span class="badge b-lider">Líder</span></div>
+          <div class="step-desc">Feedback sobre o impacto nas comunidades — engajamento, clima, qualidade das interações. Com fatos e exemplos concretos, a cada 30 dias ou quando surgir algo relevante.</div>
+        </div>
+        <div class="step-card milestone ms-amber">
+          <div class="step-top"><span class="step-icon">📊</span><span class="step-title">Avaliação parcial — Dia 60</span></div>
+          <div class="step-meta"><span class="badge b-people">Líder + People</span></div>
+          <div class="step-desc">Avalie presença e reputação nas comunidades, iniciativas próprias e evolução das métricas de engajamento. Atualize o PDI com os próximos objetivos. Marco obrigatório.</div>
+        </div>
+      </div>
+
+      <!-- Mês 3 -->
+      <div class="phase-header">
+        <span class="phase-tag ph-m3">Mês 3 — encerramento</span>
+        <div class="phase-line"></div>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card milestone ms-final">
+          <div class="step-top"><span class="step-icon">🏆</span><span class="step-title">Encerramento e abertura do ciclo contínuo — Dia 90</span></div>
+          <div class="step-meta"><span class="badge b-people">Líder + People</span></div>
+          <div class="step-desc">Feche o onboarding, celebre a chegada do Luiz ao time e abra o próximo ciclo de desenvolvimento com ele já protagonizando a agenda das comunidades.</div>
+        </div>
+      </div>
+
+      <div class="footer">Link School · Onboarding do Luiz Gevaerd · junho de 2026</div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="checklist-section">
+        <div class="checklist-header">
+          <p class="checklist-title">Checklist do líder</p>
+          <span class="checklist-count" id="cl-count">0 / 8</span>
+        </div>
+        <div class="cl-progress-track">
+          <div class="cl-progress-fill" id="cl-fill" style="width: 0%"></div>
+        </div>
+        <div id="checklist">
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-content">
+              <span class="check-text">Preparou contexto rico das comunidades antes do Dia 1?</span>
+              <span class="check-when">Antes do dia 1</span>
+            </div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-content">
+              <span class="check-text">Fez o alinhamento do JD com o Luiz na Semana 1?</span>
+              <span class="check-when">Semana 1</span>
+            </div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-content">
+              <span class="check-text">Conectou o Luiz com estudantes referência das comunidades?</span>
+              <span class="check-when">Semana 1</span>
+            </div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-content">
+              <span class="check-text">Co-construiu o PDI com ele até o Dia 30?</span>
+              <span class="check-when">Até dia 30</span>
+            </div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-content">
+              <span class="check-text">Manteve a 1:1 quinzenal com espaço para a pauta dele?</span>
+              <span class="check-when">Dias 1–60</span>
+            </div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-content">
+              <span class="check-text">Deu feedback baseado em impacto, com fatos e exemplos?</span>
+              <span class="check-when">A cada 30 dias</span>
+            </div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-content">
+              <span class="check-text">Fez o checkpoint do Dia 60 e atualizou o PDI?</span>
+              <span class="check-when">Dia 60</span>
+            </div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-content">
+              <span class="check-text">Celebrou a chegada do Luiz e abriu o próximo ciclo?</span>
+              <span class="check-when">Dia 90</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'checklist_' + document.title.replace(/\s+/g, '_');
+
+function toggle(el) {
+  el.querySelector('.check-box').classList.toggle('checked');
+  el.querySelector('.check-text').classList.toggle('done');
+  updateProgress();
+  saveState();
+}
+
+function updateProgress() {
+  const total = document.querySelectorAll('.check-item').length;
+  const done  = document.querySelectorAll('.check-box.checked').length;
+  const pct   = Math.round((done / total) * 100);
+  document.getElementById('cl-fill').style.width = pct + '%';
+  document.getElementById('cl-count').textContent = done + ' / ' + total;
+  document.getElementById('sticky-fill').style.width = pct + '%';
+  document.getElementById('sticky-pct').textContent = pct + '%';
+}
+
+function saveState() {
+  const items = document.querySelectorAll('.check-item');
+  const state = Array.from(items).map(el => el.querySelector('.check-box').classList.contains('checked'));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function loadState() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (!saved) return;
+  const state = JSON.parse(saved);
+  const items = document.querySelectorAll('.check-item');
+  items.forEach((el, i) => {
+    if (state[i]) {
+      el.querySelector('.check-box').classList.add('checked');
+      el.querySelector('.check-text').classList.add('done');
+    }
+  });
+  updateProgress();
+}
+
+document.addEventListener('DOMContentLoaded', loadState);
+</script>
+
+</div>
+
+<!-- Back button -->
+<button class="back-btn" id="back-btn" onclick="goBack()">← Voltar</button>
+
+<script>
+// ── State ──
+const KEYS = { milena: 'checklist_milena_queiroz', luiz: 'checklist_luiz_gevaerd' };
+let currentView = null;
+
+// ── Navigation ──
+function openView(name) {
+  document.getElementById('selector').style.display = 'none';
+  document.getElementById('view-milena').classList.remove('active');
+  document.getElementById('view-luiz').classList.remove('active');
+  document.getElementById('view-' + name).classList.add('active');
+  document.getElementById('back-btn').classList.add('visible');
+  currentView = name;
+  loadState(name);
+  window.scrollTo(0, 0);
+}
+
+function goBack() {
+  document.getElementById('view-milena').classList.remove('active');
+  document.getElementById('view-luiz').classList.remove('active');
+  document.getElementById('back-btn').classList.remove('visible');
+  document.getElementById('selector').style.display = 'flex';
+  currentView = null;
+  refreshSelectorProgress();
+  window.scrollTo(0, 0);
+}
+
+// ── Checklist ──
+function toggle(el) {
+  el.querySelector('.check-box').classList.toggle('checked');
+  el.querySelector('.check-text').classList.toggle('done');
+  updateProgress();
+  saveState(currentView);
+}
+
+function updateProgress() {
+  const view = document.getElementById('view-' + currentView);
+  if (!view) return;
+  const items = view.querySelectorAll('.check-item');
+  const done  = view.querySelectorAll('.check-box.checked').length;
+  const total = items.length;
+  const pct   = Math.round((done / total) * 100);
+  const fill  = view.querySelector('#cl-fill');
+  const count = view.querySelector('#cl-count');
+  const sfill = view.querySelector('#sticky-fill');
+  const spct  = view.querySelector('#sticky-pct');
+  if (fill)  fill.style.width = pct + '%';
+  if (count) count.textContent = done + ' / ' + total;
+  if (sfill) sfill.style.width = pct + '%';
+  if (spct)  spct.textContent = pct + '%';
+}
+
+function saveState(name) {
+  const view = document.getElementById('view-' + name);
+  if (!view) return;
+  const items = view.querySelectorAll('.check-item');
+  const state = Array.from(items).map(el => el.querySelector('.check-box').classList.contains('checked'));
+  localStorage.setItem(KEYS[name], JSON.stringify(state));
+  refreshSelectorProgress();
+}
+
+function loadState(name) {
+  const saved = localStorage.getItem(KEYS[name]);
+  const view  = document.getElementById('view-' + name);
+  if (!saved || !view) { updateProgress(); return; }
+  const state = JSON.parse(saved);
+  const items = view.querySelectorAll('.check-item');
+  items.forEach((el, i) => {
+    if (state[i]) {
+      el.querySelector('.check-box').classList.add('checked');
+      el.querySelector('.check-text').classList.add('done');
+    } else {
+      el.querySelector('.check-box').classList.remove('checked');
+      el.querySelector('.check-text').classList.remove('done');
+    }
+  });
+  updateProgress();
+}
+
+function getProgress(name) {
+  const saved = localStorage.getItem(KEYS[name]);
+  if (!saved) return 0;
+  const state = JSON.parse(saved);
+  const done  = state.filter(Boolean).length;
+  return Math.round((done / state.length) * 100);
+}
+
+function refreshSelectorProgress() {
+  ['milena', 'luiz'].forEach(name => {
+    const pct  = getProgress(name);
+    const fill = document.getElementById('sel-prog-' + name);
+    const lbl  = document.getElementById('sel-label-' + name);
+    if (fill) fill.style.width = pct + '%';
+    if (lbl)  lbl.textContent = pct + '%';
+  });
+}
+
+// ── Init ──
+refreshSelectorProgress();
+</script>
+</body>
+</html>
